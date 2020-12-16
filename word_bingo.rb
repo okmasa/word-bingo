@@ -3,10 +3,12 @@ class Bingo
   #標準入力の受け取り
   def initialize
     @s = gets.to_i#s × sの行列
-    @words = []#ビンゴカードを配列に入れる。ビンゴカードを行列に見立て、2次元配列で表現。
+    #ビンゴカードを配列に入れる。ビンゴカードを行列に見立て、2次元配列で表現。
     @s.times{ @words << gets.chomp.split }
+    @words = []
     @w = gets.to_i#選ばれた単語の数
-    @call = []#選ばれた単語の配列
+    #選ばれた単語を配列に入れる
+    @call = []
     @w.times{ @call << gets.chomp }
   end
 
@@ -22,21 +24,21 @@ class Bingo
   end
 
   #横のビンゴ判定
+  #行が全てnilならば横のビンゴとなるため、
+  #配列の一つの要素(row)が全てnilならばビンゴとする
   def judge_row
     find_word#nil入りビンゴカード(@words)の取得
     judge = false#ビンゴ判定
-    #行が全てnilならば横のビンゴとなるため、
-    #配列の一つの要素(row)が全てnilならばビンゴとする
     @words.each{|row| judge = true if row.all?(nil)}
     return judge
   end
  
   #縦のビンゴ判定
+  #ビンゴカードを転置し、全ての要素がnilならば縦のビンゴとなる
+  #転置した後、横のビンゴと同様にビンゴ判定する
   def judge_column
     find_word
     judge = false
-    #ビンゴカードを転置し、全ての要素がnilならば縦のビンゴとなる
-    #転置した後、横のビンゴと同様にビンゴ判定する
     trans = @words.transpose
     trans.each{|column| judge = true if column.all?(nil)}
     return judge
