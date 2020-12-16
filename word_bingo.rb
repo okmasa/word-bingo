@@ -3,7 +3,7 @@ class Bingo
   #標準入力の受け取り
   def initialize
     @s = gets.to_i#s × sの行列
-    @words = []#ビンゴカードを配列に入れる。行列を2次元配列で表現。
+    @words = []#ビンゴカードを配列に入れる。ビンゴカードを行列に見立て、2次元配列で表現。
     @s.times{ @words << gets.chomp.split }
     @w = gets.to_i#選ばれた単語の数
     @call = []#選ばれた単語の配列
@@ -12,8 +12,8 @@ class Bingo
 
   #選ばれた単語(called)と一致する単語をwords配列から見つけ、nilとする
   def find_word
-    @call.each do |called|
-      @words.each.with_index do |row, i|#i行目に対し
+    @call.each do |called|#@call配列から単語を取り出し@words配列を走査する
+      @words.each.with_index do |row, i|#i行目の
         row.each.with_index do |word, j|#j番目の単語をnilにする
           @words[i][j] = nil if word == called
         end
@@ -56,7 +56,7 @@ class Bingo
       naname1 << @words[i][i]
     end
     #左下斜めの要素をnaname2に入れる
-    #左下斜めの単語は[0][@s - 1],[1][@s - 2][2][@s - 3],..,[@s - 1][0]と言った規則性があるので、それに則り配列に入れる
+    #左下斜めの単語は[0][@s - 1],[1][@s - 2],[2][@s - 3],..,[@s - 1][0]と言った規則性があるので、それに則り配列に入れる
     (@s -1).downto(0).each do |i|
       naname2 << @words[@s-1-i][i]
     end
