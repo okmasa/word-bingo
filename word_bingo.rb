@@ -4,8 +4,8 @@ class Bingo
   def initialize
     @s = gets.to_i#s × sの行列
     #ビンゴカードを配列に入れる。ビンゴカードを行列に見立て、2次元配列で表現。
-    @s.times{ @words << gets.chomp.split }
     @words = []
+    @s.times{ @words << gets.chomp.split }
     @w = gets.to_i#選ばれた単語の数
     #選ばれた単語を配列に入れる
     @call = []
@@ -28,9 +28,9 @@ class Bingo
   #配列の一つの要素(row)が全てnilならばビンゴとする
   def judge_row
     find_word#nil入りビンゴカード(@words)の取得
-    judge = false#ビンゴ判定
-    @words.each{|row| judge = true if row.all?(nil)}
-    return judge
+    judge_r = false#ビンゴ判定
+    @words.each{|row| judge_r = true if row.all?(nil)}
+    return judge_r
   end
  
   #縦のビンゴ判定
@@ -38,17 +38,17 @@ class Bingo
   #転置した後、横のビンゴと同様にビンゴ判定する
   def judge_column
     find_word
-    judge = false
+    judge_l = false
     trans = @words.transpose
-    trans.each{|column| judge = true if column.all?(nil)}
-    return judge
+    trans.each{|column| judge_l = true if column.all?(nil)}
+    return judge_l
   end
 
   #斜めのビンゴ判定
   #斜めの単語をnaname配列に入れて、すべての要素がnilならビンゴ判定をする
   def judge_diagram
     find_word
-    judge = false
+    judge_d = false
     #右下斜め:naname1, 左下斜め:naname2
     naname1 = []
     naname2 = []
@@ -64,9 +64,9 @@ class Bingo
     end
     #右下斜めの配列と左下斜めの配列に対し、それぞれ全ての要素がnilであればビンゴとする
     if naname1.all?(nil) || naname2.all?(nil)
-      judge = true
+      judge_d = true
     end
-    return judge
+    return judge_d
   end
 
   def final_judge
